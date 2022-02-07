@@ -29,7 +29,8 @@ public class P01_SimpleGetRequest {
     @Test
     public void simpleGetRequest(){
 
-        Response response = RestAssured.get("http://34.192.175.227:1000/ords/hr/regions");
+        //Response response = RestAssured.get("http://34.192.175.227:1000/ords/hr/regions");
+        Response response = RestAssured.get("http://44.201.134.164:1000/ords/hr/regions");
 
         response.prettyPrint();
 

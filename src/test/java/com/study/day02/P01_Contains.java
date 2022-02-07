@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static io.restassured.RestAssured.given;
@@ -42,6 +43,30 @@ public class P01_Contains extends HrTestBase {
         //verify
      //   Assertions.assertTrue(response.asString().contains("Americas"));
         Assertions.assertEquals(id, (Integer) response.path("region_id"));
+
+
+
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(resources = "/regions.csv",numLinesToSkip = 1)
+    public void getOneRegionCsvFileSource(int id,String regionName ) {
+
+        Response response = given()
+                .accept(ContentType.JSON)
+                .log().uri()
+                .pathParam("id", id).
+                        when()
+                .get("/regions/{id}").prettyPeek();
+
+        Assertions.assertEquals(200,response.statusCode());
+        Assertions.assertEquals(ContentType.JSON.toString(),response.contentType());
+
+
+        //verify
+        //   Assertions.assertTrue(response.asString().contains("Americas"));
+        Assertions.assertEquals(id, (Integer) response.path("region_id"));
+        Assertions.assertEquals(regionName, response.path("region_name").toString());
 
 
 
