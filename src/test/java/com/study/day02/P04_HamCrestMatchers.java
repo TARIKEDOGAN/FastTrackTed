@@ -36,11 +36,7 @@ public class P04_HamCrestMatchers extends HrTestBase {
 
         then()
 
-
-
-
-
-.statusCode(200)
+                .statusCode(200)
                 .header("Date",notNullValue())
                 .body("items[0].region_name",is("Europe"))
                 .body("items[0].region_id",is(1))
