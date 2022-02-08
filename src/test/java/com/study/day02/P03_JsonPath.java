@@ -59,9 +59,53 @@ public class P03_JsonPath extends HrTestBase {
 
            System.out.println("countryIds = " + CountryIds);
 
-       List<String> allCityNamesUk = jP.getList("items.findAll{it.country_id=='UK'}.city" );
-       System.out.println("allCityNamesUk = " + allCityNamesUk);
+
+     // get all city where their country id is UK
+
+    List<String> allCityNamesUk = jP.getList("items.findAll{it.country_id=='UK'}.city" );
+     System.out.println("allCityNamesUk = " + allCityNamesUk);
+
+
+
+
+      }
+          /*
+    Given
+             accept type is application/json
+     When
+             user sends get request to /employees
+     Then
+             response status code must be 200
+            get me all employees first_name who is making salary more than 15000
+
+  */
+
+
+    @Test
+    public void getAllEmployees(){
+
+        Response response = given().accept(ContentType.JSON)
+                .log().uri().
+              when()
+                .get("/employees").prettyPeek();
+
+        JsonPath jp1 = response.jsonPath();
+
+
+
+        Assertions.assertEquals(200,response.statusCode());
+
+        System.out.println(response.statusCode());
+
+        List<String> AllNames = jp1.getList("items.findAll {it.salary>15000}.first_name");
+
+
+        System.out.println("AllNames = " + AllNames);
+
+
+
+    }
 
    }
 
-}
+
